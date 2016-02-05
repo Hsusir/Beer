@@ -1,0 +1,40 @@
+---
+title: "啤酒與尿布"
+author: ”Hsu sir"
+---
+
+### **資料說明**
+#### 1.模擬Walmart資料
+#### 2.Beer and Diaper
+
+```{r}
+#install.packages("rmarkdown")
+```
+
+### **[資料設定與準備]**
+```{r message=FALSE, warning=FALSE, results='hide'}
+setwd("/home/m600/Working Area/Rdata Practice/Customer Course/Beer")
+
+#install.packages("arules")
+
+library(arules)
+beer=read.csv("./beer.csv",header=T,sep=",")
+```
+
+### **[Part 1].Data-ETL**
+
+#### **1-1.資料轉置與建立規則**
+```{r message=FALSE, warning=FALSE}
+
+beer=as.matrix(beer)
+rule=apriori(beer,parameter=list(supp=0.2,conf=0.8,maxlen=5)) ##default＝0.1, 0.8, 10
+
+```
+
+#### **1-2.資料呈現**
+```{r message=FALSE, warning=FALSE}
+inspect(rule) 
+summary(rule)
+inspect(head(sort(rule,by="support"),10)) 
+```
+
